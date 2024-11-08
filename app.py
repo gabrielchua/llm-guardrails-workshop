@@ -12,7 +12,7 @@ from openai import OpenAI
 
 # Local imports
 from utils import check_secrets
-from sample_articles import articles
+from samples import articles
 
 # Check if the setup is correct
 if check_secrets():

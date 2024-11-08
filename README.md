@@ -14,9 +14,9 @@ In this workshop, we'll be working with a simple news summarizer app. Users can 
 There are a number of LLM safety vulnerabilities in this app. For this workshop, your goal is to enhance the safety of the app. We'll progressively find these vulnerabilities and add guardrails to fix them. See [activities.md](./activities.md) for more details.
 
 ## Need a reference?
-Within the `example` folder, you will find a full application with all the techniques demonstrated in the workshop.
+You may refer to the example app `example_app.py` which is the same application demonstrated during the workshop and incorporates the techniques taught.
 
-## Testing your set-up
+## Set-up
 
 > If you need assistance with the setup, please arrive 10-15 minutes early.
 
