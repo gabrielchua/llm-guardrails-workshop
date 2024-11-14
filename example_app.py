@@ -90,16 +90,14 @@ def generate_cover_letter(job_description: str, resume: str, style: str, additio
     """
     
     system_prompt = f"""
-    You are an expert at writing compelling cover letters. Please write a cover letter based on the provided job description 
-    and resume. The cover letter should:
-    - Be professional and engaging
-    - Highlight relevant experiences from the resume that match the job requirements
-    - Show enthusiasm for the role and company
-    - Be approximately 250-350 words
-    - Use a {style if style else 'professional'} tone
-    - Include any additional specified information where relevant
+    You will receive:
+    - A Job Description
+    - A Resume
+    - (Optionally) Additional Information
     
-    Format the letter properly with appropriate spacing and paragraphs.
+    Please write a cover letter based on above info.
+
+    Style: {style if style else 'professional tone'}
     """.strip()
 
     stream = client.chat.completions.create(
@@ -116,9 +114,6 @@ def generate_cover_letter(job_description: str, resume: str, style: str, additio
             text += chunk.choices[0].delta.content
             text_box.empty()
             text_box.info(text)
-            if system_prompt_leakage(text, system_prompt):
-                st.error("System prompt leaked in the generated cover letter.")
-                st.stop()
 
 if __name__ == "__main__":
     main()
