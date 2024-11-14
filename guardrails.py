@@ -26,21 +26,6 @@ SENTINEL_API_KEY = os.getenv("SENTINEL_API_KEY")
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-################################################################################
-# Helper Function For LionGuard
-################################################################################
-
-class LionGuardParams(TypedDict, total=False):
-    score_selection: Literal["balanced", "high_precision", "high_recall"]
-
-class OffTopicParams(TypedDict, total=False):
-    system_prompt: str
-
-class SentinelParams(TypedDict, total=False):
-    lionguard: LionGuardParams
-    "off-topic": OffTopicParams
-    "off-topic-2": OffTopicParams
-
 def sentinel(
     text: str,
     filters: list[str],
@@ -69,7 +54,7 @@ def sentinel(
         "Content-Type": "application/json"
     }
 
-    params: SentinelParams = {}
+    params = {}
     
     # Add params for off-topic filters if needed
     if "off-topic" in filters and system_prompt:
