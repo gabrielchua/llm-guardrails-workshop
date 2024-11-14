@@ -15,9 +15,9 @@ from samples import resumes, job_descriptions
 from utils import check_secrets
 from guardrails import system_prompt_leakage
 
-# if check_secrets():
-#     st.error("Please set the required environment variables.")
-#     st.stop()
+if check_secrets():
+    st.error("Please set the required environment variables.")
+    st.stop()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
