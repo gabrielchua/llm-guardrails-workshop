@@ -26,6 +26,26 @@ SENTINEL_API_KEY = os.getenv("SENTINEL_API_KEY")
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+
+def openai_moderation(text: str) -> bool:
+    """
+    Check text using OpenAI's Moderation Endpoint
+
+    Parameters:
+    - text: str - The text to check
+
+    Returns:
+    - 
+    """
+    response = client.moderations.create(
+        model="omni-moderation-latest",
+        input=text
+    )
+
+    return response.results[0].flagged
+
+
+
 def sentinel(
     text: str,
     filters: list[str],
@@ -83,7 +103,7 @@ def sentinel(
         timeout=30
     )
 
-    return response.json()
+    return response.json()["outputs"]
 
 async def sentinel_async(
     text: str,
