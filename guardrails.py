@@ -12,7 +12,6 @@ This module contains the guardrail functions
 
 # Standard Library
 import os
-from typing import TypedDict, Literal
 
 # Third Party
 import aiohttp
@@ -118,7 +117,7 @@ async def sentinel_async(
 
     headers = {"x-api-key": SENTINEL_API_KEY, "Content-Type": "application/json"}
 
-    params: SentinelParams = {}
+    params = {}
 
     # Add params for off-topic filters if needed
     if "off-topic" in filters and system_prompt:
@@ -148,7 +147,7 @@ async def sentinel_async(
 ################################################################################
 
 
-def system_prompt_leakage(text: str, system_prompt: str) -> bool:
+def system_prompt_leakage(text: str, system_prompt: str, threshold: float = 0.75) -> bool:
     """
     Check if the system prompt is leaked in the text.
 
@@ -166,8 +165,8 @@ def system_prompt_leakage(text: str, system_prompt: str) -> bool:
     # Calculate the number of words in the system prompt that are present in the text
     common_words = system_words.intersection(text_words)
 
-    # Check if at least 95% of the system prompt words are in the text
-    if len(common_words) / len(system_words) >= 0.95:
+    # Check if at least 75% of the system prompt words are in the text
+    if len(common_words) / len(system_words) >= threshold:
         return True
     return False
 
@@ -184,21 +183,21 @@ def grounding_check(text: str, context: str) -> bool:
     - bool - True if the text is grounded in the context, False otherwise.
     """
     SYSTEM_PROMPT = """
-        Your task is to determine if the text is grounded in the context.
-        You will be given a text and a context.
-        You will then output a 0 if the text is not grounded in the context, and a 1 if it is.
+        You will be given two texts.
+        Your task is to determine if TEXT 1 contradicts TEXT 2.
+        Return 0 if TEXT 1 does not contradict TEXT 2, and 1 if it does.
+        Think step by step.
     """.strip()
 
-    USER_PROMPT = """
-        <context>
-        {context}
-        </context>
-
-        <text>
+    USER_PROMPT = f"""
+        <TEXT 1>
         {text}
-        </text>
-    """.strip()
+        </TEXT 1>
 
+        <TEXT 2>
+        {context}
+        </TEXT 2>
+    """.strip()
     return _zero_shot_classifier(SYSTEM_PROMPT, USER_PROMPT)
 
 
