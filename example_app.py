@@ -28,6 +28,7 @@ THRESHOLD_OT = 0.5
 # Initialize the OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+
 def main():
     """
     Main function to run the Cover Letter Generator app.
@@ -39,25 +40,25 @@ def main():
         "Enter the job description:",
         height=200,
         placeholder="Paste the job description here...",
-        value=st.session_state.get("job_description", "")
+        value=st.session_state.get("job_description", ""),
     )
-    
+
     resume = st.text_area(
         "Enter your resume:",
         height=200,
         placeholder="Paste your resume or key experiences here...",
-        value=st.session_state.get("resume", "")
+        value=st.session_state.get("resume", ""),
     )
-    
+
     style = st.text_input(
-        "Writing Style (Optional)", 
-        placeholder="e.g., professional, enthusiastic, concise"
+        "Writing Style (Optional)",
+        placeholder="e.g., professional, enthusiastic, concise",
     )
-    
+
     additional_info = st.text_area(
         "Additional Information (Optional):",
         height=100,
-        placeholder="Any specific points you'd like to emphasize or company-specific details..."
+        placeholder="Any specific points you'd like to emphasize or company-specific details...",
     )
 
     # Load example button
@@ -80,7 +81,9 @@ def main():
                 st.divider()
                 st.subheader("Your Cover Letter")
                 cover_letter_box = st.empty()
-                generate_cover_letter(job_description, resume, style, additional_info, cover_letter_box)
+                generate_cover_letter(
+                    job_description, resume, style, additional_info, cover_letter_box
+                )
 
 
 def input_guardrail(job_description: str, resume: str) -> bool:
@@ -98,14 +101,10 @@ def input_guardrail(job_description: str, resume: str) -> bool:
 
     # Apply sentinel filters
     jd_response = sentinel(
-        text = job_description,
-        filters = ["lionguard", "promptguard"],
-        detail = "scores"
+        text=job_description, filters=["lionguard", "promptguard"], detail="scores"
     )
     resume_response = sentinel(
-        text = resume,
-        filters = ["lionguard", "promptguard"],
-        detail = "scores"
+        text=resume, filters=["lionguard", "promptguard"], detail="scores"
     )
 
     # Extract scores for job description
@@ -123,13 +122,15 @@ def input_guardrail(job_description: str, resume: str) -> bool:
     if jd_lg_binary_score > THRESHOLD_LG or r_lg_binary_score > THRESHOLD_LG:
         return True
     st.toast("Pass LionGuard check")
-    if  jd_pg_score > THRESHOLD_PG or r_pg_score > THRESHOLD_PG:
+    if jd_pg_score > THRESHOLD_PG or r_pg_score > THRESHOLD_PG:
         return True
     st.toast("Pass PromptGuard check")
     return False
 
 
-def generate_cover_letter(job_description: str, resume: str, style: str, additional_info: str, text_box) -> None:
+def generate_cover_letter(
+    job_description: str, resume: str, style: str, additional_info: str, text_box
+) -> None:
     """
     Generate a cover letter based on the job description and resume.
 
@@ -142,7 +143,7 @@ def generate_cover_letter(job_description: str, resume: str, style: str, additio
     Returns:
     - str: The generated cover letter
     """
-    
+
     system_prompt = f"""
     You will receive:
     - A Job Description
@@ -171,14 +172,16 @@ def generate_cover_letter(job_description: str, resume: str, style: str, additio
         st.stop()
     st.toast("Passed off-topic check")
 
-
     stream = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"Job Description:\n{job_description}\n\nResume:\n{resume}\n\nAdditional Information:\n{additional_info}"},
+            {
+                "role": "user",
+                "content": f"Job Description:\n{job_description}\n\nResume:\n{resume}\n\nAdditional Information:\n{additional_info}",
+            },
         ],
-        stream=True
+        stream=True,
     )
     text = ""
     for chunk in stream:
@@ -186,6 +189,7 @@ def generate_cover_letter(job_description: str, resume: str, style: str, additio
             text += chunk.choices[0].delta.content
             text_box.empty()
             text_box.info(text)
+
 
 if __name__ == "__main__":
     main()
