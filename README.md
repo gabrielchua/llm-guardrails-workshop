@@ -22,7 +22,9 @@ You may refer to the example app `example_app.py` which is the same application 
 
 For this workshop, we'll be using GitHub Codespaces.
 
-### 1. Set your secrets
+### 1. Fork this repo
+
+### 2. Set your secrets
 
 We will need to set the following secrets:
 
@@ -44,13 +46,13 @@ Repeat step c-e for the remaining secrets.
 
 For more general advice on how to secure your OpenAI API key, see [here](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety).
 
-### 2. Launch the Codespace
+### 3. Launch the Codespace
 
 Click the badge below to launch the Codespace.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/gabrielchua/llm-guardrails-workshop)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo={owner}/{repo})
 
-### 3. Install the requirements
+### 4. Install the requirements
 
 Once the Codespace is launched, install the requirements with the following command:
 
@@ -58,7 +60,7 @@ Once the Codespace is launched, install the requirements with the following comm
 pip install -r requirements.txt
 ```
 
-### 4. Run the app
+### 5. Run the app
 
 Run the app with the following command:
 ```
