@@ -50,7 +50,11 @@ For more general advice on how to secure your OpenAI API key, see [here](https:/
 
 Click the badge below to launch the Codespace.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo={owner}/{repo})
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new)
+
+For under `Repository`, select the repo you created through Step 1.
+
+![Codespaces setup page](<./images/codespaces.png>)
 
 ### 4. Install the requirements
 
