@@ -4,6 +4,7 @@ utils.py
 
 import os
 
+
 def check_secrets():
     """
     Check if the setup is correct.

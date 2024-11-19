@@ -24,18 +24,22 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 # Initialize the OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+
 def main():
     """
     Main function to run the Streamlit app.
     """
     st.title("📰 News Summarizer App")
 
-
-    news_article = st.text_area("Enter the news article here:",
-                                height=300,
-                                value=st.session_state.get("placeholder_news_article", ""))
+    news_article = st.text_area(
+        "Enter the news article here:",
+        height=300,
+        value=st.session_state.get("placeholder_news_article", ""),
+    )
     random_article = st.button("🔄 Random Article")
-    style = st.text_input("(Optional) What style (e.g., tone, length) would you like the summary to be in?")
+    style = st.text_input(
+        "(Optional) What style (e.g., tone, length) would you like the summary to be in?"
+    )
     summarize_btn = st.button("📝 Summarise")
 
     if random_article:
@@ -64,7 +68,7 @@ def summarize_news(news_article: str, style: str) -> str | None:
     Returns:
     - str: The summary of the news article.
     """
-    
+
     system_prompt = f"""
     Please summarise the following news article.
     {"Use this style: " + style if style else ""}
@@ -78,6 +82,7 @@ def summarize_news(news_article: str, style: str) -> str | None:
         ],
     )
     return response.choices[0].message.content
+
 
 if __name__ == "__main__":
     main()

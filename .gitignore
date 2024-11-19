@@ -40,7 +40,6 @@ venv.bak/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
 
 # Streamlit
 .streamlit/secrets.toml
