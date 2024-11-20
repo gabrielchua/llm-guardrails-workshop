@@ -173,7 +173,7 @@ def generate_cover_letter(
     st.toast("Passed off-topic check")
 
     stream = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-3.5-turbo-0125",
         messages=[
             {"role": "system", "content": system_prompt},
             {
