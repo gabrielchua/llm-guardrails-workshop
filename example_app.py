@@ -50,16 +50,17 @@ def main():
         value=st.session_state.get("resume", ""),
     )
 
-    style = st.text_input(
+    # style = st.text_input(
+    #     "Writing Style (Optional)",
+    #     placeholder="e.g., professional, enthusiastic, concise",
+    # )
+
+    style = st.selectbox(
         "Writing Style (Optional)",
-        placeholder="e.g., professional, enthusiastic, concise",
+        options = ["professional", "enthusiatic", "concise"]
+        # placeholder="e.g., professional, enthusiastic, concise",
     )
 
-    additional_info = st.text_area(
-        "Additional Information (Optional):",
-        height=100,
-        placeholder="Any specific points you'd like to emphasize or company-specific details...",
-    )
 
     # Load example button
     load_example = st.button("📋 Load Examples")
