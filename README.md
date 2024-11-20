@@ -14,7 +14,11 @@ In this workshop, we'll be working with a simple news summarizer app. Users can 
 There are a number of LLM safety vulnerabilities in this app. For this workshop, your goal is to enhance the safety of the app. We'll progressively find these vulnerabilities and add guardrails to fix them. See [activities.md](./activities.md) for more details.
 
 ## Need a reference?
-You may refer to the example app `example_app.py` which is the same application demonstrated during the workshop and incorporates the techniques taught.
+Some useful helper functions are done up in [guardrails.py](./guardrails.py)
+
+You may also refer to:
+- the example app ([example_app.py](./example_app.py) which is the same application demonstrated during the workshop and incorporates the techniques taught.
+- [guardrail_examples.ipynb](./guardrail_examples.ipynb) which shows how the functions in `guardrails.py` can be used.
 
 ## Set-up
 
